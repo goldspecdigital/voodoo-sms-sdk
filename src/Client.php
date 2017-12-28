@@ -49,7 +49,7 @@ class Client
      * @param string $password
      * @param null|string $from
      */
-    public function __construct(string $username, string $password, ?string $from = null)
+    public function __construct(string $username, string $password, string $from = null)
     {
         $this->httpClient = new HttpClient(static::URI);
         $this->username = $username;
@@ -70,7 +70,7 @@ class Client
      * @throws \GoldSpecDigital\VoodooSmsSdk\Exceptions\MessageTooLongException
      * @throws \GoldSpecDigital\VoodooSmsSdk\Exceptions\ExternalReferenceTooLongException
      */
-    public function send(string $message, string $to, ?string $from = null, ?string $externalReference = null): object
+    public function send(string $message, string $to, string $from = null, string $externalReference = null): object
     {
         if (strlen($message) > static::MESSAGE_LIMIT) {
             throw new MessageTooLongException();
