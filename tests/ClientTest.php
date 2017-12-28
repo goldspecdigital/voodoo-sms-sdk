@@ -59,6 +59,20 @@ class DummyTest extends TestCase
     }
 
     /**
+     * @throws \Exception
+     */
+    public function testGetDeliveryStatusWorks(): void
+    {
+        $client = $this->createClient('PHPUnitTest');
+        $response = $client->send('This is a test message', getenv('VOODOO_TO'));
+        $deliveryStatus = $client->getDeliveryStatus($response->reference_id[0]);
+
+        $this->assertEquals('200 OK', $deliveryStatus->result);
+        $this->assertEquals($response->reference_id[0], $deliveryStatus->reference_id);
+        $this->assertEquals('This is a test message', $deliveryStatus->message);
+    }
+
+    /**
      * @param null|string $from
      * @return \GoldSpecDigital\VoodooSmsSdk\Client
      */
