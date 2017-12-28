@@ -18,7 +18,9 @@ Simply pull in the package in with composer:
 $ composer require goldspecdigital/voodoo-sms-sdk
 ```
 
-### Example
+### Examples
+
+#### Send an SMS
 
 ```php
 <?php
@@ -36,6 +38,30 @@ var_dump($response);
     "result": 200,
     "resultText": "200 OK",
     "reference_id": ["A3dads..."]
+}
+*/
+```
+
+#### Get the Delivery Status for an SMS
+
+```php
+<?php
+
+use GoldSpecDigital\VoodooSmsSdk\Client;
+
+$client = new Client('username', 'password', 'CompanyName');
+
+$response = $client->getDeliveryStatus('A3dads...');
+
+var_dump($response);
+
+/*
+{
+    "result": "200 OK",
+    "reference_id": "A3dads...",
+    "message": "This is a test message",
+    "delivery_status": "Delivered",
+    "delivery_datetime": "2017-12-28 00:06:09"
 }
 */
 ```
