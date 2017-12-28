@@ -27,7 +27,7 @@ use GoldSpecDigital\VoodooSmsSdk\Client;
 
 $client = new Client('username', 'password', 'CompanyName');
 
-$response = $client->send('This is a test message','07712345678');
+$response = $client->send('This is a test message', '07712345678');
 
 var_dump($response);
 
