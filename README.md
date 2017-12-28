@@ -4,7 +4,7 @@ PHP SDK for communicating with the Voodoo SMS API.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you up and running on your local machine and a development environment.
 
 ### Prerequisites
 
@@ -16,6 +16,28 @@ Simply pull in the package in with composer:
 
 ```
 $ composer require goldspecdigital/voodoo-sms-sdk
+```
+
+### Example
+
+```php
+<?php
+
+use GoldSpecDigital\VoodooSmsSdk\Client;
+
+$client = new Client('username', 'password', 'CompanyName');
+
+$response = $client->send('This is a test message','07712345678');
+
+var_dump($response);
+
+/*
+{
+    "result": 200,
+    "resultText": "200 OK",
+    "reference_id": ["A3dads..."]
+}
+*/
 ```
 
 ## Running the tests
