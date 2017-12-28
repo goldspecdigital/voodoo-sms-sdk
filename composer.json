@@ -1,0 +1,33 @@
+{
+  "name": "goldspecdigital/voodoo-sms-sdk",
+  "description": "An SDK to interact with the Voodoo SMS API.",
+  "type": "library",
+  "license": "MIT",
+  "keywords": ["gsd", "goldspec", "digital", "voodoo", "sms", "sdk"],
+  "homepage": "https://github.com/goldspecdigital/voodoo-sms-sdk",
+  "authors": [
+    {
+      "name": "Matthew Inamdar",
+      "email": "matthew.inamdar@goldspecdigital.com",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "GoldSpecDigital\\VoodooSmsSdk\\": "src/",
+      "GoldSpecDigital\\VoodooSmsSdk\\Tests\\": "tests/"
+    }
+  },
+  "require": {
+    "php": ">=7.2",
+    "guzzle/http": "^3.9"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^6.5",
+    "squizlabs/php_codesniffer": "^3.2",
+    "codedungeon/phpunit-result-printer": "^0.4.4",
+    "psy/psysh": "^0.8.16",
+    "vlucas/phpdotenv": "^2.4",
+    "slevomat/coding-standard": "^4.1"
+  }
+}
