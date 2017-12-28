@@ -13,7 +13,7 @@ class Client
 {
     protected const URI = 'https://www.voodooSMS.com/vapi/server/';
     protected const MESSAGE_LIMIT = 160;
-    protected const EXTERNAL_REFERENCE_LIMIT = 160;
+    protected const EXTERNAL_REFERENCE_LIMIT = 30;
     protected const COUNTRY_CODE = 44;
     protected const RESPONSE_FORMAT = 'JSON';
 
@@ -115,9 +115,13 @@ class Client
     public function getDeliveryStatus(string $referenceID): object
     {
         $uri = 'getDlrStatus';
-        $parameters = ['reference_id' => $referenceID];
+        $parameters = [
+            'uid' => $this->username,
+            'pass' => $this->password,
+            'reference_id' => $referenceID,
+        ];
 
-        $request = $this->httpClient->get($uri, $this->headers, $parameters);
+        $request = $this->httpClient->post($uri, $this->headers, $parameters);
         $response = $this->httpClient->send($request);
 
         return json_decode((string)$response->getBody());
