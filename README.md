@@ -97,7 +97,7 @@ Feel free to issue a pull request, although any requests that fail PHPUnit or th
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/goldspecdigital/voodoo-sms-sdk/tags). 
 
 ## License
 
