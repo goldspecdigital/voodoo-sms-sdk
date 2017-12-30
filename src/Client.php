@@ -16,6 +16,7 @@ class Client
     protected const EXTERNAL_REFERENCE_LIMIT = 30;
     protected const COUNTRY_CODE = 44;
     protected const RESPONSE_FORMAT = 'JSON';
+    protected const HEADERS = ['Accept' => 'application/json'];
 
     /**
      * @var \GuzzleHttp\Client
@@ -48,7 +49,7 @@ class Client
     {
         $this->httpClient = new HttpClient([
             'base_uri' => static::URI,
-            'headers' => ['Accept' => 'application/json'],
+            'headers' => static::HEADERS,
         ]);
         $this->username = $username;
         $this->password = $password;
