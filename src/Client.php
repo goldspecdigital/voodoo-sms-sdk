@@ -6,7 +6,7 @@ namespace GoldSpecDigital\VoodooSmsSdk;
 
 use GoldSpecDigital\VoodooSmsSdk\Exceptions\ExternalReferenceTooLongException;
 use GoldSpecDigital\VoodooSmsSdk\Exceptions\MessageTooLongException;
-use Guzzle\Http\Client as HttpClient;
+use GuzzleHttp\Client as HttpClient;
 use InvalidArgumentException;
 
 class Client
@@ -18,7 +18,7 @@ class Client
     protected const RESPONSE_FORMAT = 'JSON';
 
     /**
-     * @var \Guzzle\Http\Client
+     * @var \GuzzleHttp\Client
      */
     protected $httpClient;
 
@@ -38,11 +38,6 @@ class Client
     protected $from;
 
     /**
-     * @var array
-     */
-    protected $headers = ['Accept' => 'application/json'];
-
-    /**
      * Client constructor.
      *
      * @param string $username
@@ -51,7 +46,10 @@ class Client
      */
     public function __construct(string $username, string $password, string $from = null)
     {
-        $this->httpClient = new HttpClient(static::URI);
+        $this->httpClient = new HttpClient([
+            'base_uri' => static::URI,
+            'headers' => ['Accept' => 'application/json'],
+        ]);
         $this->username = $username;
         $this->password = $password;
         $this->from = $from;
@@ -101,8 +99,7 @@ class Client
         ];
         $parameters = array_filter($parameters, [$this, 'isNotNull']);
 
-        $request = $this->httpClient->post($uri, $this->headers, $parameters);
-        $response = $this->httpClient->send($request);
+        $response = $this->httpClient->post($uri, ['form_params' => $parameters]);
 
         return json_decode((string)$response->getBody());
     }
@@ -121,8 +118,7 @@ class Client
             'reference_id' => $referenceID,
         ];
 
-        $request = $this->httpClient->post($uri, $this->headers, $parameters);
-        $response = $this->httpClient->send($request);
+        $response = $this->httpClient->post($uri, ['form_params' => $parameters]);
 
         return json_decode((string)$response->getBody());
     }
