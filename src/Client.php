@@ -6,6 +6,8 @@ namespace GoldSpecDigital\VoodooSmsSdk;
 
 use GoldSpecDigital\VoodooSmsSdk\Exceptions\ExternalReferenceTooLongException;
 use GoldSpecDigital\VoodooSmsSdk\Exceptions\MessageTooLongException;
+use GoldSpecDigital\VoodooSmsSdk\Responses\DeliveryStatusResponse;
+use GoldSpecDigital\VoodooSmsSdk\Responses\SendSmsResponse;
 use GuzzleHttp\Client as HttpClient;
 use InvalidArgumentException;
 
@@ -63,13 +65,12 @@ class Client
      * @param string $to
      * @param null|string $from
      * @param null|string $externalReference The external reference.
-     * @return object
-     * @throws \Exception
+     * @return \GoldSpecDigital\VoodooSmsSdk\Responses\SendSmsResponse
      * @throws \InvalidArgumentException
      * @throws \GoldSpecDigital\VoodooSmsSdk\Exceptions\MessageTooLongException
      * @throws \GoldSpecDigital\VoodooSmsSdk\Exceptions\ExternalReferenceTooLongException
      */
-    public function send(string $message, string $to, string $from = null, string $externalReference = null): object
+    public function send(string $message, string $to, string $from = null, string $externalReference = null): SendSmsResponse
     {
         if (strlen($message) > static::MESSAGE_LIMIT) {
             throw new MessageTooLongException();
@@ -101,16 +102,16 @@ class Client
         $parameters = array_filter($parameters, [$this, 'isNotNull']);
 
         $response = $this->httpClient->post($uri, ['form_params' => $parameters]);
+        $responseContents = json_decode((string)$response->getBody(), true);
 
-        return json_decode((string)$response->getBody());
+        return new SendSmsResponse($responseContents);
     }
 
     /**
      * @param string $referenceID
-     * @return object
-     * @throws \Exception
+     * @return \GoldSpecDigital\VoodooSmsSdk\Responses\DeliveryStatusResponse
      */
-    public function getDeliveryStatus(string $referenceID): object
+    public function getDeliveryStatus(string $referenceID): DeliveryStatusResponse
     {
         $uri = 'getDlrStatus';
         $parameters = [
@@ -120,8 +121,9 @@ class Client
         ];
 
         $response = $this->httpClient->post($uri, ['form_params' => $parameters]);
+        $responseContents = json_decode((string)$response->getBody(), true);
 
-        return json_decode((string)$response->getBody());
+        return new DeliveryStatusResponse($responseContents);
     }
 
     /**
