@@ -29,7 +29,7 @@ class DummyTest extends TestCase
         $client = $this->createClient();
         $response = $client->send('This is a test message', getenv('VOODOO_TO'), 'PHPUnitTest', 'testing');
 
-        $this->assertEquals(200, $response->result);
+        $this->assertEquals(200, $response->getResult());
     }
 
     /**
@@ -43,7 +43,7 @@ class DummyTest extends TestCase
         $client = $this->createClient();
         $response = $client->send('This is a test message', getenv('VOODOO_TO'), 'PHPUnitTest');
 
-        $this->assertEquals(200, $response->result);
+        $this->assertEquals(200, $response->getResult());
     }
 
     /**
@@ -55,7 +55,7 @@ class DummyTest extends TestCase
         $client = $this->createClient('PHPUnitTest');
         $response = $client->send('This is a test message', getenv('VOODOO_TO'));
 
-        $this->assertEquals(200, $response->result);
+        $this->assertEquals(200, $response->getResult());
     }
 
     /**
@@ -65,11 +65,11 @@ class DummyTest extends TestCase
     {
         $client = $this->createClient('PHPUnitTest');
         $response = $client->send('This is a test message', getenv('VOODOO_TO'));
-        $deliveryStatus = $client->getDeliveryStatus($response->reference_id[0]);
+        $deliveryStatus = $client->getDeliveryStatus($response->getReferenceId()[0]);
 
-        $this->assertEquals('200 OK', $deliveryStatus->result);
-        $this->assertEquals($response->reference_id[0], $deliveryStatus->reference_id);
-        $this->assertEquals('This is a test message', $deliveryStatus->message);
+        $this->assertEquals(200, $deliveryStatus->getResult());
+        $this->assertEquals($response->getReferenceId()[0], $deliveryStatus->getReferenceId());
+        $this->assertEquals('This is a test message', $deliveryStatus->getMessage());
     }
 
     /**
